@@ -1,5 +1,3 @@
-
-//url route for yugioh cards https://db.ygoprodeck.com/api/v7/cardinfo.php  
 const express = require('express');
 const router = express.Router();
 const cardController = require('../controllers/CardController');
