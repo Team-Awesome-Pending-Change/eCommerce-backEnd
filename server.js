@@ -35,7 +35,6 @@ app.get('/test', (req, res) => {
 app.use(userRoutes); // localhost:300/usertest route
 
 
-
 //start the server
 app.listen(port, () => {
   console.log(`Server is up on port ${port}`);
