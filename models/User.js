@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const cartInfo = require('./Cart.js');
+// const cartInfo = require('./Cart.js');
 
 const baseInfo = new Schema({
   name: { type: String, required: true },
@@ -8,13 +8,6 @@ const baseInfo = new Schema({
   image: String,
   description_header: String,
   description: String,
-  section_name: {
-    profile: String,
-    projects: String,
-    mystuff: String,
-    skills: String,
-    experience: String,
-  },
 });
 
 const roleSchema = new Schema({
@@ -24,7 +17,7 @@ const roleSchema = new Schema({
 
 const securityInfo = new Schema({
   name: { type: String },
-  username: { type: String, required: true, unique: true },
+  username: { type: String, required: true, unique: true }, 
   password: { type: String, required: true },
   email: { type: String },
   role_data: { type: roleSchema, required: true },
@@ -33,7 +26,7 @@ const securityInfo = new Schema({
 const UserSchema = new Schema(
   {
     basic_info: { type: baseInfo, required: false },
-    activity_data: { type: cartInfo, required: false },
+    // activity_data: { type: cartInfo, required: false },
     login_data: { type: securityInfo, required: true },
   },
   { timestamps: true },

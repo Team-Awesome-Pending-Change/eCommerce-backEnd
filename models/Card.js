@@ -8,12 +8,12 @@ const CardSchema = new mongoose.Schema({
   },
   name: {
     type: String,
-    required: true,
+    required: false,
     unique: true,
   },
   type: {
     type: String,
-    required: true,
+    required: false,
   },
   desc: {
     type: String,
