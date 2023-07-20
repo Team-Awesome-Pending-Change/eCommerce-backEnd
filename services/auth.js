@@ -1,5 +1,5 @@
 // services.js
-const Users = require('../models/UserSchema');
+const Users = require('../models/User');
 const jwt = require('jsonwebtoken');
 const { validatePassword, createToken } = require('../utils/utils');
 const SECRET_KEY = process.env.SECRET_KEY;
