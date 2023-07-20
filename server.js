@@ -17,11 +17,11 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
+app.use(routes); 
 app.get('/', (req, res) => {
   res.send('This is the beginning....');
 });
 
-app.use('/pokemon', routes); 
 
 //start the server
 app.listen(port, () => {
