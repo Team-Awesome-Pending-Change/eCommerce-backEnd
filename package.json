@@ -1,8 +1,20 @@
 {
   "dependencies": {
+    "axios": "^1.4.0",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "eslint": "^8.45.0",
-    "express": "^4.18.2"
-  }
+    "express": "^4.18.2",
+    "mongoose": "^7.4.0"
+  },
+  "scripts": {
+    "start": "nodemon"
+  },
+  "name": "ecommerce-backend",
+  "description": "## Authors: Hayden Cooper, Ryan Eastman, Kao Saelor, Reed Vogt, and Reece Renninger.",
+  "version": "1.0.0",
+  "main": "server.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
