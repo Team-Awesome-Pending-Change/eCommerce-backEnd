@@ -5,8 +5,8 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
-const userRoutes = require('./routes/user.js');
-
+const userRoute = require('./routes/user.js');
+const authRoute = require('./routes/auth.js');
 // Configure dotenv
 dotenv.config();
 
@@ -32,8 +32,8 @@ app.get('/test', (req, res) => {
 });
 
 // Routes
-app.use(userRoutes); // localhost:300/usertest route
-
+app.use(userRoute); // localhost:300/usertest route
+app.use(authRoute); // localhost:3002/register route
 
 //start the server
 app.listen(port, () => {
