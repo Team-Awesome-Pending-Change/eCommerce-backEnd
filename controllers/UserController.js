@@ -10,13 +10,17 @@ exports.signup = async (req, res, next) => {
   console.log('signup', req.body);
 
   const { login_data, basic_info, ...otherInfo } = req.body;
-  const { username, password, email, role_data } = login_data;
+  console.log('login_data', login_data);
 
-  const { name, age } = basic_info;
-  if (!name || !age) {
+  const { username, password, email, role_data } = login_data;
+  console.log('username: ', username);
+
+  const { name } = basic_info;
+
+  if (!name) {
     return res.status(400).json({ message: 'Basic_info fields are required' });
   }
-
+  
   const existingUser = await Users.findOne({ 'login_data.username': username.trim() });
 
   if (existingUser) {
