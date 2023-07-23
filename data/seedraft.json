@@ -1,0 +1,233 @@
+{
+  "data": [
+    {
+      "id": 6983839,
+      "name": "Tornado Dragon",
+      "type": "XYZ Monster",
+      "frameType": "xyz",
+      "desc": "2 Level 4 monsters\nOnce per turn (Quick Effect): You can detach 1 material from this card, then target 1 Spell/Trap on the field; destroy it.",
+      "atk": 2100,
+      "def": 2000,
+      "level": 4,
+      "race": "Wyrm",
+      "attribute": "WIND",
+      "card_images": [
+        {
+          "id": 6983839,
+          "image_url": "https://images.ygoprodeck.com/images/cards/6983839.jpg"
+        }
+      ],
+      "card_prices": [
+        {
+          "tcgplayer_price": "0.48"
+        }
+      ]
+    },
+    {
+      "id": 46986414,
+      "name": "Blue-Eyes White Dragon",
+      "type": "Normal Monster",
+      "frameType": "normal",
+      "desc": "This legendary dragon is a powerful engine of destruction. Virtually invincible, very few have faced this awesome creature and lived to tell the tale.",
+      "atk": 3000,
+      "def": 2500,
+      "level": 8,
+      "race": "Dragon",
+      "attribute": "LIGHT",
+      "card_images": [
+        {
+          "id": 46986414,
+          "image_url": "https://images.ygoprodeck.com/images/cards/46986414.jpg"
+        }
+      ],
+      "card_prices": [
+        {
+          "tcgplayer_price": "5.36"
+        }
+      ]
+    },
+    {
+      "id": 74677422,
+      "name": "Red-Eyes Black Dragon",
+      "type": "Normal Monster",
+      "frameType": "normal",
+      "desc": "A ferocious dragon with a deadly attack.",
+      "atk": 2400,
+      "def": 2000,
+      "level": 7,
+      "race": "Dragon",
+      "attribute": "DARK",
+      "card_images": [
+        {
+          "id": 74677422,
+          "image_url": "https://images.ygoprodeck.com/images/cards/74677422.jpg"
+        }
+      ],
+      "card_prices": [
+        {
+          "tcgplayer_price": "3.78"
+        }
+      ]
+    },
+    {
+      "id": 89631139,
+      "name": "Blue-Eyes Ultimate Dragon",
+      "type": "Fusion Monster",
+      "frameType": "fusion",
+      "desc": "'Blue-Eyes White Dragon' + 'Blue-Eyes White Dragon' + 'Blue-Eyes White Dragon'",
+      "atk": 4500,
+      "def": 3800,
+      "level": 12,
+      "race": "Dragon",
+      "attribute": "LIGHT",
+      "card_images": [
+        {
+          "id": 89631139,
+          "image_url": "https://images.ygoprodeck.com/images/cards/89631139.jpg"
+        }
+      ],
+      "card_prices": [
+        {
+          "tcgplayer_price": "15.23"
+        }
+      ]
+    },
+    {
+      "id": 70781052,
+      "name": "Decode Talker",
+      "type": "Link Monster",
+      "frameType": "link",
+      "desc": "2+ Effect Monsters\nGains 500 ATK for each monster it points to. When your opponent activates a card or effect that targets a card(s) you control (Quick Effect): You can Tribute 1 monster this card points to; negate the activation, and if you do, destroy that card.",
+      "atk": 2300,
+      "level": 3,
+      "race": "Cyberse",
+      "attribute": "DARK",
+      "card_images": [
+        {
+          "id": 70781052,
+          "image_url": "https://images.ygoprodeck.com/images/cards/70781052.jpg"
+        }
+      ],
+      "card_prices": [
+        {
+          "tcgplayer_price": "1.87"
+        }
+      ]
+    },
+    {
+      "id": 44508094,
+      "name": "Stardust Dragon",
+      "type": "Synchro Monster",
+      "frameType": "synchro",
+      "desc": "1 Tuner + 1+ non-Tuner monsters\nDuring either player's turn, when a card or effect is activated that would destroy a card(s) on the field: You can Tribute this card; negate the activation, and if you do, destroy it. During the End Phase, if this effect was activated this turn (and was not negated): You can Special Summon this card from your Graveyard.",
+      "atk": 2500,
+      "def": 2000,
+      "level": 8,
+      "race": "Dragon",
+      "attribute": "WIND",
+      "card_images": [
+        {
+          "id": 44508094,
+          "image_url": "https://images.ygoprodeck.com/images/cards/44508094.jpg"
+        }
+      ],
+      "card_prices": [
+        {
+          "tcgplayer_price": "8.44"
+        }
+      ]
+    },
+    {
+      "id": 33396948,
+      "name": "Exodia the Forbidden One",
+      "type": "Effect Monster",
+      "frameType": "effect",
+      "desc": "If you have 'Right Arm of the Forbidden One', 'Left Arm of the Forbidden One', 'Right Leg of the Forbidden One' and 'Left Leg of the Forbidden One' in addition to this card in your hand, you win the Duel.",
+      "atk": 1000,
+      "def": 1000,
+      "level": 3,
+      "race": "Spellcaster",
+      "attribute": "DARK",
+      "card_images": [
+        {
+          "id": 33396948,
+          "image_url": "https://images.ygoprodeck.com/images/cards/33396948.jpg"
+        }
+      ],
+      "card_prices": [
+        {
+          "tcgplayer_price": "20.00"
+        }
+      ]
+    },
+    {
+      "id": 64788463,
+      "name": "Yubel",
+      "type": "Effect Monster",
+      "frameType": "effect",
+      "desc": "This card cannot be destroyed by battle. You take no Battle Damage from battles involving this card. Before damage calculation, when this face-up Attack Position card is attacked by an opponent's monster: Inflict damage to your opponent equal to that monster's ATK. During your End Phase: Tribute 1 other monster or destroy this card. When this card is destroyed, except by its own effect: Its owner can Special Summon 1 'Yubel - Terror Incarnate' from their hand, Deck, or Graveyard.",
+      "atk": 0,
+      "def": 0,
+      "level": 10,
+      "race": "Fiend",
+      "attribute": "DARK",
+      "card_images": [
+        {
+          "id": 64788463,
+          "image_url": "https://images.ygoprodeck.com/images/cards/64788463.jpg"
+        }
+      ],
+      "card_prices": [
+        {
+          "tcgplayer_price": "2.95"
+        }
+      ]
+    },
+    {
+      "id": 4035199,
+      "name": "Summoned Skull",
+      "type": "Normal Monster",
+      "frameType": "normal",
+      "desc": "A fiend with dark powers for confusing the enemy. Among the Fiend-Type monsters, this monster boasts considerable force.",
+      "atk": 2500,
+      "def": 1200,
+      "level": 6,
+      "race": "Fiend",
+      "attribute": "DARK",
+      "card_images": [
+        {
+          "id": 4035199,
+          "image_url": "https://images.ygoprodeck.com/images/cards/4035199.jpg"
+        }
+      ],
+      "card_prices": [
+        {
+          "tcgplayer_price": "1.23"
+        }
+      ]
+    },
+    {
+      "id": 29432356,
+      "name": "Marshmallon",
+      "type": "Effect Monster",
+      "frameType": "effect",
+      "desc": "After damage calculation, if this card was attacked, and was face-down at the start of the Damage Step: The attacking player takes 1000 damage. Monsters cannot destroy this card by battle.",
+      "atk": 300,
+      "def": 500,
+      "level": 3,
+      "race": "Fairy",
+      "attribute": "LIGHT",
+      "card_images": [
+        {
+          "id": 29432356,
+          "image_url": "https://images.ygoprodeck.com/images/cards/29432356.jpg"
+        }
+      ],
+      "card_prices": [
+        {
+          "tcgplayer_price": "0.79"
+        }
+      ]
+    }
+  ]
+}

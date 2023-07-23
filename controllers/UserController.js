@@ -1,7 +1,11 @@
 const Users = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { findUser, validatePassword, createToken } = require('../services/auth.js');
+const {
+  findUser,
+  validatePassword,
+  createToken,
+} = require('../services/auth.js');
 const mongoose = require('mongoose');
 
 const SECRET_KEY = process.env.SECRET_KEY;
@@ -17,14 +21,15 @@ exports.signup = async (req, res, next) => {
 
   const { name } = basic_info;
 
-  if (!name) {
-    return res.status(400).json({ message: 'Basic_info fields are required' });
+  if (!name || !email || !username || !password) {
+    return res.status(400).json({ message: 'Basic_info, username, email, and password fields are required' });
   }
-  
-  const existingUser = await Users.findOne({ 'login_data.username': username.trim() });
 
+  const existingUser = await Users.findOne({ 'login_data.username': username.trim() });
+  
+  console.log('existingUser:', existingUser);
   if (existingUser) {
-    return res.status(409).json({ message: 'Username already exists' });
+    return res.status(409).json({ message: `Username ${username} already exists`});
   }
 
   const hashedPassword = await bcrypt.hash(password.trim(), 10);
@@ -33,13 +38,13 @@ exports.signup = async (req, res, next) => {
     login_data: {
       username: username.trim(),
       password: hashedPassword,
-      email,
+      email: email.trim(),
       role_data,
     },
     basic_info,
     ...otherInfo,
   });
-
+  console.log('newUser:', newUser);
   try {
     await newUser.save();
     const token = jwt.sign(
@@ -50,26 +55,32 @@ exports.signup = async (req, res, next) => {
       },
       SECRET_KEY,
     );
-
+    console.log('token:', token);
     res.status(201).json({ token });
   } catch (error) {
     if (error instanceof mongoose.Error.ValidationError) {
       console.error('Signup validation error: ', error.errors);
-      return res.status(400).json({ message: 'Invalid user data', error: error.errors });
+      return res
+        .status(400)
+        .json({ message: 'Invalid user data', error: error.errors });
     } else if (error.code === 11000) {
       console.error('Duplicate key signup error: ', error.keyValue);
-      return res.status(400).json({ message: 'Duplicate key error', error: error.keyValue });
+      return res
+        .status(400)
+        .json({ message: 'Duplicate key error', error: error.keyValue });
     }
     console.error('Signup error: ', error);
     next(error);
   }
 };
 
+
 exports.signin = async (req, res, next) => {
+  console.log('signin', req.body);
   const { username, password } = req.body;
 
   const user = await findUser(username);
-
+  console.log('user:', user);
   if (!user) {
     return res.status(401).json({ message: 'Invalid username' });
   }
