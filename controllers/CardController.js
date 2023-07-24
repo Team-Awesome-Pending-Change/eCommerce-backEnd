@@ -29,6 +29,28 @@ exports.getCardByName = async (name) => {
   return await Card.findOne({ name: name });
 };
 
+exports.updateCardStock = async (req, res) => {
+  try {
+    const card = await Card.findById(req.params.id);
+    if (!card) {
+      return res.status(404).json({ message: 'Card not found.' });
+    }
+
+    const newStock = req.body.inStock;
+    if (newStock < 0) {
+      return res.status(400).json({ message: 'Stock cannot be less than 0.' });
+    }
+
+    card.inStock = newStock;
+    const updatedCard = await card.save();
+
+    res.json(updatedCard);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+};
+
+
 // Fetch card data from external API and save to database
 exports.getCardsFromApi = async () => {
   try {
