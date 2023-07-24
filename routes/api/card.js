@@ -53,4 +53,20 @@ router.get('/attribute/:attribute', async (req, res) => {
   }
 });
 
+router.put('/:id', async (req, res) => {
+  try {
+    const cards = await cardController.getCardByAttribute(
+      req.params.attribute,
+    );
+    if (cards.length === 0) {
+      return res
+        .status(404)
+        .json({ message: 'Cannot find cards of given attribute' });
+    }
+    res.json(cards);
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+});
+
 module.exports = router;

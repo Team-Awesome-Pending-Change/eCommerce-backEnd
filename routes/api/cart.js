@@ -3,7 +3,6 @@ const router = express.Router();
 const cartController = require('../../controllers/CartController');
 
 router.get('/', async (req, res, next) => {
-  console.log(`[${new Date().toISOString()}] GET /api/cart`, req.body);
   try {
     const carts = await cartController.getAllCarts();
     res.json(carts);
@@ -12,11 +11,20 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/:id', async (req, res, next) => {
-  console.log('GET /api/cart/:id', req.body);
-  console.log('req.params.id', req.params.id);
+router.post('/', async (req, res, next) => {
   try {
-    const cart = await cartController.getCartById(req.params.id);
+    const { userId, cartData } = req.body;
+    const newCart = await cartController.createCart(userId, cartData);
+    res.json(newCart);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get('/:id', async (req, res, next) => {
+  const id = req.params.id;
+  try {
+    const cart = await cartController.getCartById(id);
     if (!cart) {
       return res.status(404).json({ message: 'Cannot find cart' });
     }
@@ -26,18 +34,20 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-router.post('/:id/addToCart', async (req, res, next) => {
-  
-  console.log('POST /api/cart/:id/addToCart', req.body);
+router.post('/:id', async (req, res, next) => {
+  const userId = req.params.userId;
+  const cardId = req.body.cardId;
+  const cartId = req.body.cartId;
+
   try {
-    const cart = await cartController.addItemToCart(req.params.id, req.body);
+    const cart = await cartController.addCardToCart(userId, cardId, cartId);
     res.json(cart);
   } catch (error) {
     next(error);
   }
 });
 
-router.get('/api/cart/:userId', async (req, res) => {
+router.get('/:userId', async (req, res) => {
   try {
     const cart = await cartController.getCart(req.params.userId);
     if (!cart) {
@@ -45,7 +55,9 @@ router.get('/api/cart/:userId', async (req, res) => {
     }
     return res.status(200).json(cart);
   } catch (error) {
-    return res.status(500).json({ message: 'Error retrieving cart for user.', error });
+    return res
+      .status(500)
+      .json({ message: 'Error retrieving cart for user.', error });
   }
 });
 
@@ -70,19 +82,12 @@ router.delete('/:id', async (req, res, next) => {
   }
 });
 
-router.post('/:id/items', async (req, res, next) => {
-  console.log('PUT /api/cart/:id/items', req.body);
-  try {
-    const cart = await cartController.addItemToCart(req.params.id, req.body);
-    res.json(cart);
-  } catch (err) {
-    next(err);
-  }
-});
-
 router.delete('/:id/items/:productId', async (req, res, next) => {
   try {
-    const cart = await cartController.removeItemFromCart(req.params.id, req.params.productId);
+    const cart = await cartController.removeItemFromCart(
+      req.params.id,
+      req.params.productId,
+    );
     res.json(cart);
   } catch (err) {
     next(err);
