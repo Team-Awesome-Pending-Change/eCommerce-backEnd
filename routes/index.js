@@ -6,12 +6,14 @@ const orderRoutes = require('./api/order');
 const productRoutes = require('./api/product');
 const cartRoutes = require('./api/cart');
 const cardRoutes = require('./api/card'); // Import card routes
+const ygoproRoutes = require('./api/ygopro'); // Import card routes
 
 router.use('/orders', orderRoutes);
 router.use('/users', userRoutes);
 router.use('/products', productRoutes);
-router.use('/cart', cartRoutes);
+router.use('/carts', cartRoutes);
 router.use('/cards', cardRoutes); // Use card routes
+router.use('/cards/ygopro', ygoproRoutes); // Use card routes
 
 
 module.exports = router;

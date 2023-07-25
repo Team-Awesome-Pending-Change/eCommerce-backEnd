@@ -7,7 +7,7 @@ const UserController = require('../../controllers/UserController.js');
 function asyncHandler(fn) {
   return (req, res, next) => {
     Promise.resolve(fn(req, res, next)).catch((error) => {
-      console.error(`Error occurred in ${req.path}: `, error);
+      // console.error(`Error occurred in ${req.path}: `, error);
       next(error);
     });
   };
@@ -26,7 +26,7 @@ router.delete('/profile/:id', verifyToken, asyncHandler(UserController.deletePro
 router.get('/:id', asyncHandler(UserController.getUserById));
 
 router.use((error, req, res, next) => {
-  console.error('Middleware error: ', error);
+  // console.error('Middleware error: ', error);
   res.status(500).send('Server error.');
 });
 

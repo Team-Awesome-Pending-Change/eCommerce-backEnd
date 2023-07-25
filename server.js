@@ -100,7 +100,7 @@ applyCustomMiddleware(app);
 app.use(
   '/api',
   (req, res, next) => {
-    console.log(`Received request on API route: ${req.method} ${req.originalUrl}`);
+    // console.log(`Received request on API route: ${req.method} ${req.originalUrl}`);
     next();
   },
   routes,
