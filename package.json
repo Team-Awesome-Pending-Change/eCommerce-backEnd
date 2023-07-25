@@ -19,7 +19,7 @@
   },
   "scripts": {
     "start": "nodemon",
-    "test": "jest Model.test.js"
+    "test": "jest Model.test.js Routes.test.js --verbose --coverage"
   },
   "name": "ecommerce-backend",
   "description": "## Authors: Hayden Cooper, Ryan Eastman, Kao Saelor, Reed Vogt, and Reece Renninger.",

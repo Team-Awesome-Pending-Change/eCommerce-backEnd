@@ -2,88 +2,63 @@ const request = require('supertest');
 const express = require('express');
 const app = express();
 
-// Mocked data for controllers (use appropriate mocked data for each controller)
-const cardController = {
+// Mock the CardController functions
+const cardController = require('../../controllers/CardController');
+jest.mock('../../controllers/CardController', () => ({
   getAllCards: jest.fn().mockResolvedValue([
     { id: 1, name: 'Card 1', type: 'Type A', attribute: 'Attribute X' },
     { id: 2, name: 'Card 2', type: 'Type B', attribute: 'Attribute Y' },
   ]),
-  // ... other mocked functions for cardController
-};
-
-const cartController = {
-  // ... mocked functions for cartController
-};
-
-const orderController = {
-  // ... mocked functions for orderController
-};
-
-const productController = {
-  // ... mocked functions for productController
-};
-
-const tcgPlayerController = {
-  // ... mocked functions for tcgPlayerController
-};
-
-const userController = {
-  // ... mocked functions for userController
-};
-
-// Route files
-const cardRoutes = require('./Card');
-const cartRoutes = require('./Cart');
-const orderRoutes = require('./Order');
-const productRoutes = require('./Product');
-const tcgPlayerRoutes = require('./TCGPlayerRoutes');
-const userRoutes = require('./User');
-
-// Use the mocked controllers in the route files
-jest.mock('../../controllers/CardController', () => cardController);
-jest.mock('../../controllers/CartController', () => cartController);
-jest.mock('../../controllers/OrderController', () => orderController);
-jest.mock('../../controllers/ProductController', () => productController);
-jest.mock('../../controllers/TCGPlayerController', () => tcgPlayerController);
-jest.mock('../../controllers/UserController', () => userController);
+  getCardById: jest.fn().mockImplementation((id) => {
+    const card = mockedCards.find((c) => c.id === parseInt(id));
+    return Promise.resolve(card || null);
+  }),
+  getCardByType: jest.fn().mockImplementation((type) => {
+    const cards = mockedCards.filter((c) => c.type === type);
+    return Promise.resolve(cards);
+  }),
+  getCardByAttribute: jest.fn().mockImplementation((attribute) => {
+    const cards = mockedCards.filter((c) => c.attribute === attribute);
+    return Promise.resolve(cards);
+  }),
+}));
 
 // Mount the routes in the express app
+const cardRoutes = require('./card');
 app.use('/cards', cardRoutes);
-app.use('/carts', cartRoutes);
-app.use('/orders', orderRoutes);
-app.use('/products', productRoutes);
-app.use('/tcgplayer', tcgPlayerRoutes);
-app.use('/users', userRoutes);
+
+// Mocked data for testing
+const mockedCards = [
+  { id: 1, name: 'Card 1', type: 'Type A', attribute: 'Attribute X' },
+  { id: 2, name: 'Card 2', type: 'Type B', attribute: 'Attribute Y' },
+];
 
 describe('Card Routes', () => {
   test('GET /cards should return all cards', async () => {
     const response = await request(app).get('/cards');
     expect(response.status).toBe(200);
-    expect(response.body).toEqual([
-      { id: 1, name: 'Card 1', type: 'Type A', attribute: 'Attribute X' },
-      { id: 2, name: 'Card 2', type: 'Type B', attribute: 'Attribute Y' },
-    ]);
+    expect(response.body).toEqual(mockedCards);
   });
 
-  // Add more tests for other card routes
-});
+  test('GET /cards/id/:id should return a single card by ID', async () => {
+    const cardId = 1; // Change this to test different card IDs
+    const response = await request(app).get(`/cards/id/${cardId}`);
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual(mockedCards[0]);
+  });
 
-describe('Cart Routes', () => {
-  // Write tests for cart routes in a similar fashion
-});
+  test('GET /cards/type/:type should return cards of a given type', async () => {
+    const cardType = 'Type A'; // Change this to test different card types
+    const response = await request(app).get(`/cards/type/${cardType}`);
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual([mockedCards[0]]);
+  });
 
-describe('Order Routes', () => {
-  // Write tests for order routes in a similar fashion
-});
+  test('GET /cards/attribute/:attribute should return cards of a given attribute', async () => {
+    const cardAttribute = 'Attribute Y'; // Change this to test different attributes
+    const response = await request(app).get(`/cards/attribute/${cardAttribute}`);
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual([mockedCards[1]]);
+  });
 
-describe('Product Routes', () => {
-  // Write tests for product routes in a similar fashion
-});
-
-describe('TCGPlayer Routes', () => {
-  // Write tests for TCGPlayer routes in a similar fashion
-});
-
-describe('User Routes', () => {
-  // Write tests for user routes in a similar fashion
 });

@@ -18,8 +18,6 @@ describe('Models Test', () => {
     Card.create.mockResolvedValue(cardData);
     Card.findById.mockResolvedValue(cardData);
 
-    // Your test code for Card model functionalities goes here
-    // For example:
     const createdCard = await Card.create({ id: 1, name: 'Test Card' });
     const fetchedCard = await Card.findById(1);
 
@@ -27,7 +25,6 @@ describe('Models Test', () => {
     expect(fetchedCard).toMatchObject(cardData);
   });
 
-  // Add more tests for other model functionalities
 
   test('should create and fetch a Cart', async () => {
     // Mock Cart model methods
@@ -35,8 +32,6 @@ describe('Models Test', () => {
     Cart.create.mockResolvedValue(cartData);
     Cart.findById.mockResolvedValue(cartData);
 
-    // Your test code for Cart model functionalities goes here
-    // For example:
     const createdCart = await Cart.create({ userId: 'user_id', cart: [{ card: 'card_id', quantity: 2 }] });
     const fetchedCart = await Cart.findById('cart_id');
 
@@ -50,8 +45,6 @@ describe('Models Test', () => {
     Order.create.mockResolvedValue(orderData);
     Order.findById.mockResolvedValue(orderData);
 
-    // Your test code for Order model functionalities goes here
-    // For example:
     const createdOrder = await Order.create({ userId: 'user_id', products: [{ productId: 'product_id', quantity: 1 }] });
     const fetchedOrder = await Order.findById('order_id');
 
@@ -65,8 +58,6 @@ describe('Models Test', () => {
     Product.create.mockResolvedValue(productData);
     Product.findById.mockResolvedValue(productData);
 
-    // Your test code for Product model functionalities goes here
-    // For example:
     const createdProduct = await Product.create({ name: 'Test Product', price: 50, inStock: 10 });
     const fetchedProduct = await Product.findById('product_id');
 
@@ -80,8 +71,6 @@ describe('Models Test', () => {
     User.create.mockResolvedValue(userData);
     User.findById.mockResolvedValue(userData);
 
-    // Your test code for User model functionalities goes here
-    // For example:
     const createdUser = await User.create({ basic_info: { name: 'John Doe' }, login_data: { username: 'johndoe', password: 'password' } });
     const fetchedUser = await User.findById('user_id');
 
