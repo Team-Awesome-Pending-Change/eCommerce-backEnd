@@ -1,0 +1,670 @@
+{
+  "stats": {
+    "suites": 7,
+    "tests": 17,
+    "passes": 4,
+    "pending": 0,
+    "failures": 13,
+    "start": "2023-07-25T19:17:11.762Z",
+    "end": "2023-07-25T19:17:11.860Z",
+    "duration": 98,
+    "testsRegistered": 17,
+    "passPercent": 23.52941176470588,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "74da1dec-a5fd-4f73-82c4-37d1d5c42bc6",
+      "title": "",
+      "fullFile": "",
+      "file": "",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "9b0cc0e4-78ee-4f97-8adb-406d3d15a5d3",
+          "title": "CardController",
+          "fullFile": "/Users/haydenjamescooper/projects/courses/code-401/eCommerce-backEnd/tests/CardController.test.js",
+          "file": "/tests/CardController.test.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [],
+          "suites": [
+            {
+              "uuid": "7bfd8bdb-eb7c-4907-9c9b-b0958568457d",
+              "title": "GET /api/cards",
+              "fullFile": "/Users/haydenjamescooper/projects/courses/code-401/eCommerce-backEnd/tests/CardController.test.js",
+              "file": "/tests/CardController.test.js",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "should get all cards",
+                  "fullTitle": "CardController GET /api/cards should get all cards",
+                  "timedOut": false,
+                  "duration": 2,
+                  "state": "failed",
+                  "speed": null,
+                  "pass": false,
+                  "fail": true,
+                  "pending": false,
+                  "context": null,
+                  "code": "// Stub Card.find to return the test card\nsinon.stub(Card, 'find').returns([testCard]);\nconst response = await request(app).get('/api/cards');\nexpect(response.status).to.equal(200);\nexpect(response.body).to.be.an('array');\nexpect(response.body).to.have.lengthOf(1);\nexpect(response.body[0].id).to.equal(testCard.id);",
+                  "err": {
+                    "message": "ReferenceError: testCard is not defined",
+                    "estack": "ReferenceError: testCard is not defined\n    at Context.<anonymous> (tests/CardController.test.js:14:41)\n    at process.processImmediate (node:internal/timers:475:21)",
+                    "diff": null
+                  },
+                  "uuid": "ba3b9b49-c7dc-4790-8bf4-35c9acca9003",
+                  "parentUUID": "7bfd8bdb-eb7c-4907-9c9b-b0958568457d",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [],
+              "failures": [
+                "ba3b9b49-c7dc-4790-8bf4-35c9acca9003"
+              ],
+              "pending": [],
+              "skipped": [],
+              "duration": 2,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "f046bf2d-2cba-4b4f-b836-163fcce709be",
+              "title": "GET /api/cards/:id",
+              "fullFile": "/Users/haydenjamescooper/projects/courses/code-401/eCommerce-backEnd/tests/CardController.test.js",
+              "file": "/tests/CardController.test.js",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "should get a card by id",
+                  "fullTitle": "CardController GET /api/cards/:id should get a card by id",
+                  "timedOut": false,
+                  "duration": 1,
+                  "state": "failed",
+                  "speed": null,
+                  "pass": false,
+                  "fail": true,
+                  "pending": false,
+                  "context": null,
+                  "code": "const testCardId = 'TestCardID';\n// Stub Card.findOne to return the test card\nsinon.stub(Card, 'findOne').resolves(testCard);\nconst response = await request(app).get(`/api/cards/${testCardId}`);\nexpect(response.status).to.equal(200);\nexpect(response.body).to.be.an('object');\nexpect(response.body.id).to.equal(testCard.id);",
+                  "err": {
+                    "message": "ReferenceError: testCard is not defined",
+                    "estack": "ReferenceError: testCard is not defined\n    at Context.<anonymous> (tests/CardController.test.js:28:44)\n    at process.processImmediate (node:internal/timers:475:21)",
+                    "diff": null
+                  },
+                  "uuid": "a1e548b5-ac2f-48cd-a830-7979236340d6",
+                  "parentUUID": "f046bf2d-2cba-4b4f-b836-163fcce709be",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "should return 404 if card with given id is not found",
+                  "fullTitle": "CardController GET /api/cards/:id should return 404 if card with given id is not found",
+                  "timedOut": false,
+                  "duration": 1,
+                  "state": "failed",
+                  "speed": null,
+                  "pass": false,
+                  "fail": true,
+                  "pending": false,
+                  "context": null,
+                  "code": "const nonExistentCardId = 'NonExistentCardID';\n// Stub Card.findOne to return null to simulate card not found\nsinon.stub(Card, 'findOne').resolves(null);\nconst response = await request(app).get(`/api/cards/${nonExistentCardId}`);\nexpect(response.status).to.equal(404);\nexpect(response.body).to.be.an('object');\nexpect(response.body.message).to.equal('Card not found.');",
+                  "err": {
+                    "message": "TypeError: Attempted to wrap findOne which is already wrapped",
+                    "estack": "TypeError: Attempted to wrap findOne which is already wrapped\n    at checkWrappedMethod (node_modules/sinon/lib/sinon/util/core/wrap-method.js:67:21)\n    at wrapMethod (node_modules/sinon/lib/sinon/util/core/wrap-method.js:132:13)\n    at Function.stub (node_modules/sinon/lib/sinon/stub.js:130:44)\n    at Sandbox.stub (node_modules/sinon/lib/sinon/sandbox.js:389:39)\n    at Context.<anonymous> (tests/CardController.test.js:39:13)\n    at process.processImmediate (node:internal/timers:475:21)\n--------------\nError: Stack Trace for original\n    at extendObjectWithWrappedMethods (node_modules/sinon/lib/sinon/util/core/wrap-method.js:173:34)\n    at wrapMethod (node_modules/sinon/lib/sinon/util/core/wrap-method.js:161:5)\n    at Function.stub (node_modules/sinon/lib/sinon/stub.js:130:44)\n    at Sandbox.stub (node_modules/sinon/lib/sinon/sandbox.js:389:39)\n    at Context.<anonymous> (tests/CardController.test.js:28:13)\n    at process.processImmediate (node:internal/timers:475:21)",
+                    "diff": null
+                  },
+                  "uuid": "77cd1da4-6ed4-4166-807d-fbb437b7936b",
+                  "parentUUID": "f046bf2d-2cba-4b4f-b836-163fcce709be",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [],
+              "failures": [
+                "a1e548b5-ac2f-48cd-a830-7979236340d6",
+                "77cd1da4-6ed4-4166-807d-fbb437b7936b"
+              ],
+              "pending": [],
+              "skipped": [],
+              "duration": 2,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            }
+          ],
+          "passes": [],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "44612a45-6140-44c6-b5e1-852d18bb138f",
+          "title": "CartController",
+          "fullFile": "/Users/haydenjamescooper/projects/courses/code-401/eCommerce-backEnd/tests/CartController.test.js",
+          "file": "/tests/CartController.test.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should get all carts",
+              "fullTitle": "CartController should get all carts",
+              "timedOut": false,
+              "duration": 20,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "request(app)\n  .get('/carts')\n  .expect(200)\n  .end((err, res) => {\n    if (err) return done(err);\n    expect(res.body).to.be.an('array'); // Expect the response to be an array\n    done();\n  });",
+              "err": {
+                "message": "AssertionError: expected '' to be an array",
+                "estack": "AssertionError: expected '' to be an array\n    at Test.<anonymous> (tests/CartController.test.js:46:32)\n    at Test.assert (node_modules/supertest/lib/test.js:172:8)\n    at Server.localAssert (node_modules/supertest/lib/test.js:120:14)\n    at Object.onceWrapper (node:events:626:28)\n    at Server.emit (node:events:512:28)\n    at emitCloseNT (node:net:2132:8)\n    at process.processTicksAndRejections (node:internal/process/task_queues:81:21)",
+                "diff": null
+              },
+              "uuid": "dbe49d6b-e80e-4487-8675-8968b73993d8",
+              "parentUUID": "44612a45-6140-44c6-b5e1-852d18bb138f",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should add a new cart",
+              "fullTitle": "CartController should add a new cart",
+              "timedOut": false,
+              "duration": 21,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const cartData = { name: 'New Card' };\nrequest(app)\n  .post('/carts')\n  .send(cartData)\n  .expect(200)\n  .end((err, res) => {\n    if (err) return done(err);\n    expect(res.body).to.have.property('_id'); // Expect the response to have '_id' property\n    done();\n  });",
+              "err": {
+                "message": "Error: expected 200 \"OK\", got 500 \"Internal Server Error\"",
+                "estack": "Error: expected 200 \"OK\", got 500 \"Internal Server Error\"\n    at Context.<anonymous> (tests/CartController.test.js:56:8)\n    at process.processImmediate (node:internal/timers:475:21)\n----\n    at Test._assertStatus (node_modules/supertest/lib/test.js:252:14)\n    at /Users/haydenjamescooper/projects/courses/code-401/eCommerce-backEnd/node_modules/supertest/lib/test.js:308:13\n    at Test._assertFunction (node_modules/supertest/lib/test.js:285:13)\n    at Test.assert (node_modules/supertest/lib/test.js:164:23)\n    at Server.localAssert (node_modules/supertest/lib/test.js:120:14)\n    at Object.onceWrapper (node:events:626:28)\n    at Server.emit (node:events:512:28)\n    at emitCloseNT (node:net:2132:8)\n    at process.processTicksAndRejections (node:internal/process/task_queues:81:21)",
+                "diff": null
+              },
+              "uuid": "20343fce-a394-4cfe-9cb5-b8eb829ba877",
+              "parentUUID": "44612a45-6140-44c6-b5e1-852d18bb138f",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should get a cart by id",
+              "fullTitle": "CartController should get a cart by id",
+              "timedOut": false,
+              "duration": 3,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const id = 'test-id';\nrequest(app)\n  .get(`/carts/${id}`)\n  .expect(200)\n  .end((err, res) => {\n    if (err) return done(err);\n    expect(res.body).to.have.property('_id', id); // Expect the response to have '_id' property with the provided id\n    done();\n  });",
+              "err": {},
+              "uuid": "49e84649-4752-4f06-9dc4-808f7123bd3c",
+              "parentUUID": "44612a45-6140-44c6-b5e1-852d18bb138f",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should update a cart",
+              "fullTitle": "CartController should update a cart",
+              "timedOut": false,
+              "duration": 4,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const id = 'test-id';\nconst cartData = { name: 'Updated Card' };\nrequest(app)\n  .put(`/carts/${id}`)\n  .send(cartData)\n  .expect(200)\n  .end((err, res) => {\n    if (err) return done(err);\n    expect(res.body).to.have.property('_id', id); // Expect the response to have '_id' property with the provided id\n    expect(res.body).to.have.property('name', 'Updated Card'); // Expect the response to have updated 'name'\n    done();\n  });",
+              "err": {},
+              "uuid": "7047417f-60c9-4b0b-a20e-97dd73f034f7",
+              "parentUUID": "44612a45-6140-44c6-b5e1-852d18bb138f",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should delete a cart",
+              "fullTitle": "CartController should delete a cart",
+              "timedOut": false,
+              "duration": 3,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const id = 'test-id';\nrequest(app)\n  .delete(`/carts/${id}`)\n  .expect(200)\n  .end((err, res) => {\n    if (err) return done(err);\n    expect(res.body).to.have.property('_id', id); // Expect the response to have '_id' property with the provided id\n    expect(res.body).to.have.property('name', 'Deleted Card'); // Expect the response to indicate a deleted card\n    done();\n  });",
+              "err": {
+                "message": "AssertionError: expected { Object (message) } to have property '_id'",
+                "estack": "AssertionError: expected { Object (message) } to have property '_id'\n    at Test.<anonymous> (tests/CartController.test.js:98:34)\n    at Test.assert (node_modules/supertest/lib/test.js:172:8)\n    at Server.localAssert (node_modules/supertest/lib/test.js:120:14)\n    at Object.onceWrapper (node:events:626:28)\n    at Server.emit (node:events:512:28)\n    at emitCloseNT (node:net:2132:8)\n    at process.processTicksAndRejections (node:internal/process/task_queues:81:21)",
+                "diff": null
+              },
+              "uuid": "aa6a0c2c-de58-44af-acd2-d437c0a2d38f",
+              "parentUUID": "44612a45-6140-44c6-b5e1-852d18bb138f",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "49e84649-4752-4f06-9dc4-808f7123bd3c",
+            "7047417f-60c9-4b0b-a20e-97dd73f034f7"
+          ],
+          "failures": [
+            "dbe49d6b-e80e-4487-8675-8968b73993d8",
+            "20343fce-a394-4cfe-9cb5-b8eb829ba877",
+            "aa6a0c2c-de58-44af-acd2-d437c0a2d38f"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 51,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "bceaa938-5f3d-49a4-8441-308157c02778",
+          "title": "OrderController",
+          "fullFile": "/Users/haydenjamescooper/projects/courses/code-401/eCommerce-backEnd/tests/OrderController.test.js",
+          "file": "/tests/OrderController.test.js",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook",
+              "fullTitle": "OrderController \"before all\" hook",
+              "timedOut": false,
+              "duration": 0,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "try {\n  // Create a test order to be used in the tests\n  testOrder = await Order.create({\n    address: 'Test Address',\n    amount: 50,\n    userId: 'TestUserID',\n  });\n} catch (error) {\n  console.error(error);\n}",
+              "err": {},
+              "uuid": "1e77f01a-47df-45f6-a009-47aff6c0af89",
+              "parentUUID": null,
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [
+            {
+              "title": "\"after all\" hook",
+              "fullTitle": "OrderController \"after all\" hook",
+              "timedOut": false,
+              "duration": 0,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Clean up the database after all tests are done\nawait Order.deleteMany({});\napp.close();",
+              "err": {},
+              "uuid": "7f70ae8e-f8d5-46f8-8427-779e7f611568",
+              "parentUUID": null,
+              "isHook": true,
+              "skipped": false
+            },
+            {
+              "title": "\"after each\" hook",
+              "fullTitle": "OrderController \"after each\" hook",
+              "timedOut": false,
+              "duration": 0,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "sinon.restore();",
+              "err": {},
+              "uuid": "a8e08ede-5e92-425c-ab77-41fb52da813e",
+              "parentUUID": null,
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "tests": [],
+          "suites": [],
+          "passes": [],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "6c1d32cf-8828-4f9f-84cb-af48e9d4e473",
+          "title": "ProductController",
+          "fullFile": "/Users/haydenjamescooper/projects/courses/code-401/eCommerce-backEnd/tests/ProductController.test.js",
+          "file": "/tests/ProductController.test.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should get all products",
+              "fullTitle": "ProductController should get all products",
+              "timedOut": false,
+              "duration": 7,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const response = await request(server).get('/products');\nexpect(response.status).toBe(200);\nexpect(Array.isArray(response.body)).toBe(true);",
+              "err": {
+                "message": "ReferenceError: expect is not defined",
+                "estack": "ReferenceError: expect is not defined\n    at Context.<anonymous> (tests/ProductController.test.js:7:5)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                "diff": null
+              },
+              "uuid": "3a80dbe4-a74e-4622-a2dc-f8076e124437",
+              "parentUUID": "6c1d32cf-8828-4f9f-84cb-af48e9d4e473",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should get a product by id",
+              "fullTitle": "ProductController should get a product by id",
+              "timedOut": false,
+              "duration": 3,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const productId = 'example-product-id';\nconst response = await request(server).get(`/products/${productId}`);\nexpect(response.status).toBe(200);\nexpect(response.body._id).toBe(productId);",
+              "err": {
+                "message": "ReferenceError: expect is not defined",
+                "estack": "ReferenceError: expect is not defined\n    at Context.<anonymous> (tests/ProductController.test.js:14:5)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                "diff": null
+              },
+              "uuid": "f12ac239-4d84-46f1-9d99-4f70f64ac77d",
+              "parentUUID": "6c1d32cf-8828-4f9f-84cb-af48e9d4e473",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "3a80dbe4-a74e-4622-a2dc-f8076e124437",
+            "f12ac239-4d84-46f1-9d99-4f70f64ac77d"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 10,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "b1954360-2cae-4662-b20d-f894bdebbb82",
+          "title": "TCGPlayerController",
+          "fullFile": "/Users/haydenjamescooper/projects/courses/code-401/eCommerce-backEnd/tests/TCGPlayerController.test.js",
+          "file": "/tests/TCGPlayerController.test.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should generate a token",
+              "fullTitle": "TCGPlayerController should generate a token",
+              "timedOut": false,
+              "duration": 3,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const response = await request(server).post('/generate-token');\nexpect(response.status).toBe(200);\nexpect(response.body).toHaveProperty('access_token');",
+              "err": {
+                "message": "ReferenceError: expect is not defined",
+                "estack": "ReferenceError: expect is not defined\n    at Context.<anonymous> (tests/TCGPlayerController.test.js:7:5)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                "diff": null
+              },
+              "uuid": "d082dfae-cc0d-4661-a4be-32ce4d1d7e3a",
+              "parentUUID": "b1954360-2cae-4662-b20d-f894bdebbb82",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "d082dfae-cc0d-4661-a4be-32ce4d1d7e3a"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 3,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "21a7bb11-2d06-421e-86fe-696116f54bcc",
+          "title": "Custom Middleware",
+          "fullFile": "/Users/haydenjamescooper/projects/courses/code-401/eCommerce-backEnd/tests/middleware.test.js",
+          "file": "/tests/middleware.test.js",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook in \"Custom Middleware\"",
+              "fullTitle": "Custom Middleware \"before all\" hook in \"Custom Middleware\"",
+              "timedOut": false,
+              "duration": 0,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "app = express();\n// Apply custom middleware to the app\napplyCustomMiddleware(app);",
+              "err": {},
+              "uuid": "22c99e8d-f4d8-4eae-91cf-b7c3a37c7f46",
+              "parentUUID": "21a7bb11-2d06-421e-86fe-696116f54bcc",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should set up logger middleware",
+              "fullTitle": "Custom Middleware should set up logger middleware",
+              "timedOut": false,
+              "duration": 3,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Create a test route to check if the logger middleware is working\napp.get('/test-logger', (req, res) => {\n  res.send('Test Logger Middleware');\n});\nconst response = await request(app).get('/test-logger');\nexpect(response.status).to.equal(200);\nexpect(response.text).to.equal('Test Logger Middleware');",
+              "err": {},
+              "uuid": "b70a9000-3013-4d28-a2ea-84493065baa8",
+              "parentUUID": "21a7bb11-2d06-421e-86fe-696116f54bcc",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should set up static middleware",
+              "fullTitle": "Custom Middleware should set up static middleware",
+              "timedOut": false,
+              "duration": 0,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "// Create a test route to check if the static middleware is working\nconst staticFilePath = path.join(__dirname, '../public/test.html');\napp.get('/test-static', (req, res) => {\n  res.sendFile(staticFilePath);\n});\nconst response = await request(app).get('/test-static');\nexpect(response.status).to.equal(200);\nexpect(response.type).to.equal('text/html');",
+              "err": {
+                "message": "ReferenceError: path is not defined",
+                "estack": "ReferenceError: path is not defined\n    at Context.<anonymous> (tests/middleware.test.js:28:28)\n    at process.processImmediate (node:internal/timers:475:21)",
+                "diff": null
+              },
+              "uuid": "18244549-e387-44fe-bb63-7515448c5e35",
+              "parentUUID": "21a7bb11-2d06-421e-86fe-696116f54bcc",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should set up express.json middleware",
+              "fullTitle": "Custom Middleware should set up express.json middleware",
+              "timedOut": false,
+              "duration": 4,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Create a test route to check if the express.json middleware is working\napp.post('/test-json', (req, res) => {\n  res.json(req.body);\n});\nconst data = { message: 'Hello, World!' };\nconst response = await request(app).post('/test-json').send(data);\nexpect(response.status).to.equal(200);\nexpect(response.body).to.deep.equal(data);",
+              "err": {},
+              "uuid": "1d7fccd5-dd7b-4366-9668-048fea00a303",
+              "parentUUID": "21a7bb11-2d06-421e-86fe-696116f54bcc",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should set up cors middleware",
+              "fullTitle": "Custom Middleware should set up cors middleware",
+              "timedOut": false,
+              "duration": 3,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "// Create a test route to check if the cors middleware is working\napp.get('/test-cors', (req, res) => {\n  res.send('Test CORS Middleware');\n});\nconst response = await request(app).get('/test-cors');\nexpect(response.status).to.equal(200);\nexpect(response.text).to.equal('Test CORS Middleware');\nexpect(response.header['access-control-allow-origin']).to.equal('http://localhost:3000');\nexpect(response.header['access-control-allow-methods']).to.equal('GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS');\nexpect(response.header['access-control-allow-headers']).to.equal('Content-Type, Authorization');",
+              "err": {
+                "message": "AssertionError: expected undefined to equal 'http://localhost:3000'",
+                "estack": "AssertionError: expected undefined to equal 'http://localhost:3000'\n    at Context.<anonymous> (tests/middleware.test.js:59:63)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                "diff": null
+              },
+              "uuid": "c1852bab-f0a1-48ec-ae56-fd0ee3a4d531",
+              "parentUUID": "21a7bb11-2d06-421e-86fe-696116f54bcc",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should set up error handling middleware for ValidationError",
+              "fullTitle": "Custom Middleware should set up error handling middleware for ValidationError",
+              "timedOut": false,
+              "duration": 4,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "// Create a test route that throws a ValidationError\napp.get('/test-validation-error', (req, res, next) => {\n  const err = new Error('Test Validation Error');\n  err.name = 'ValidationError';\n  next(err);\n});\nconst response = await request(app).get('/test-validation-error');\nexpect(response.status).to.equal(400);\nexpect(response.body.message).to.equal('Test Validation Error');",
+              "err": {
+                "message": "AssertionError: expected 500 to equal 400",
+                "estack": "AssertionError: expected 500 to equal 400\n    at Context.<anonymous> (tests/middleware.test.js:73:32)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                "diff": "- 500\n+ 400\n"
+              },
+              "uuid": "332f2864-2e49-4388-b1c2-a63595c8d839",
+              "parentUUID": "21a7bb11-2d06-421e-86fe-696116f54bcc",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should set up error handling middleware for MongoError",
+              "fullTitle": "Custom Middleware should set up error handling middleware for MongoError",
+              "timedOut": false,
+              "duration": 3,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "// Create a test route that throws a MongoError\napp.get('/test-mongo-error', (req, res, next) => {\n  const err = new Error('Test Mongo Error');\n  err.name = 'MongoError';\n  next(err);\n});\nconst response = await request(app).get('/test-mongo-error');\nexpect(response.status).to.equal(400);\nexpect(response.body.message).to.equal('There was a problem with the database operation');",
+              "err": {
+                "message": "AssertionError: expected 500 to equal 400",
+                "estack": "AssertionError: expected 500 to equal 400\n    at Context.<anonymous> (tests/middleware.test.js:86:32)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                "diff": "- 500\n+ 400\n"
+              },
+              "uuid": "b45f0de2-5d38-46df-98ff-1a8d578055c0",
+              "parentUUID": "21a7bb11-2d06-421e-86fe-696116f54bcc",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "b70a9000-3013-4d28-a2ea-84493065baa8",
+            "1d7fccd5-dd7b-4366-9668-048fea00a303"
+          ],
+          "failures": [
+            "18244549-e387-44fe-bb63-7515448c5e35",
+            "c1852bab-f0a1-48ec-ae56-fd0ee3a4d531",
+            "332f2864-2e49-4388-b1c2-a63595c8d839",
+            "b45f0de2-5d38-46df-98ff-1a8d578055c0"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 17,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "10.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": null,
+      "version": "6.2.0"
+    }
+  }
+}
