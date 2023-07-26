@@ -8,7 +8,7 @@ const CartSchema = new Schema({
     required: true,
   },
   cart: [{
-    card: {
+    items: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Card', // This references the Card model
       required: true,

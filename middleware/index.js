@@ -17,7 +17,7 @@ module.exports = function applyCustomMiddleware(app) {
 
   // Error handling middleware
   app.use((err, req, res, next) => {
-    console.error(err.stack); // Log the stack trace of the error
+    // console.error(err.stack); // Log the stack trace of the error
 
     // Customize the status code and message depending on the type of the error
     let status = 500;

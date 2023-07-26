@@ -11,13 +11,13 @@ const mongoose = require('mongoose');
 const SECRET_KEY = process.env.SECRET_KEY;
 
 exports.signup = async (req, res, next) => {
-  console.log('signup', req.body);
+  // console.log('signup', req.body);
 
   const { login_data, basic_info, ...otherInfo } = req.body;
-  console.log('login_data', login_data);
+  // console.log('login_data', login_data);
 
   const { username, password, email, role_data } = login_data;
-  console.log('username: ', username);
+  // console.log('username: ', username);
 
   const { name } = basic_info;
 
@@ -44,7 +44,7 @@ exports.signup = async (req, res, next) => {
     basic_info,
     ...otherInfo,
   });
-  console.log('newUser:', newUser);
+  // console.log('newUser:', newUser);
   try {
     await newUser.save();
     const token = jwt.sign(
@@ -55,7 +55,7 @@ exports.signup = async (req, res, next) => {
       },
       SECRET_KEY,
     );
-    console.log('token:', token);
+    // console.log('token:', token);
     res.status(201).json({ token });
   } catch (error) {
     if (error instanceof mongoose.Error.ValidationError) {
@@ -76,11 +76,11 @@ exports.signup = async (req, res, next) => {
 
 
 exports.signin = async (req, res, next) => {
-  console.log('signin', req.body);
+  // console.log('signin', req.body);
   const { username, password } = req.body;
 
   const user = await findUser(username);
-  console.log('user:', user);
+  // console.log('user:', user);
   if (!user) {
     return res.status(401).json({ message: 'Invalid username' });
   }

@@ -70,7 +70,6 @@
 
 // module.exports = app;
 
-
 'use strict';
 
 const express = require('express');
@@ -89,9 +88,14 @@ const app = express();
 const port = process.env.PORT || 3002;
 
 //MongoDb connection
-mongoose.connect(process.env.MONGODB_URL)
-  .then(() => { console.log('Connected to MongoDB'); })
-  .catch((err) => { console.log(err); });
+mongoose
+  .connect(process.env.MONGODB_URL)
+  .then(() => {
+    console.log('Connected to MongoDB');
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 // Apply middleware
 applyCustomMiddleware(app);
@@ -100,7 +104,7 @@ applyCustomMiddleware(app);
 app.use(
   '/api',
   (req, res, next) => {
-    console.log(`Received request on API route: ${req.method} ${req.originalUrl}`);
+    // console.log(`Received request on API route: ${req.method} ${req.originalUrl}`);
     next();
   },
   routes,
