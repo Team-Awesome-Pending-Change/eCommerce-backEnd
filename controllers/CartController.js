@@ -1,8 +1,24 @@
-const Cart = require('../models/Cart.js');
+const Cart = require("../models/Cart.js");
 
 exports.getCart = async (req, res) => {
   const cart = await Cart.findOne({ userId: req.params.id });
   res.json(cart);
+};
+
+exports.getUserCart = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const userCart = await Cart.findOne({ userId: userId }); // Assuming your Cart model has a userId field
+
+    if (!userCart) {
+      return res.status(404).json({ error: "Cart not found" });
+    }
+
+    res.status(200).json(userCart);
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
 };
 
 exports.getAllCarts = async (req, res) => {
@@ -18,7 +34,7 @@ exports.createOrUpdateCart = async (req, res) => {
   if (!cart) {
     cart = new Cart({
       userId: userId,
-      card: [{ itemId, quantity }],
+      items: [{ itemId, quantity }],
     });
   } else {
     cart.items.push({ itemId, quantity });
@@ -46,7 +62,7 @@ exports.updateCart = async (req, res) => {
     await cart.save();
     res.json(cart);
   } else {
-    res.status(404).json({ error: 'Cart not found.' });
+    res.status(404).json({ error: "Cart not found." });
   }
 };
 
@@ -65,6 +81,6 @@ exports.deleteItemFromCart = async (req, res) => {
     await cart.save();
     res.json(cart);
   } else {
-    res.status(404).json({ error: 'Cart not found.' });
+    res.status(404).json({ error: "Cart not found." });
   }
 };

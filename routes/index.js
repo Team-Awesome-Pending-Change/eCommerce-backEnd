@@ -14,7 +14,7 @@ router.use('/products', productRoutes);
 router.use('/carts', cartRoutes);
 router.use('/cards', cardRoutes); // Use card routes
 router.use('/cards/ygopro', ygoproRoutes); // Use card routes
-
+// router.use('/carts/userCart/:userId', cartRoutes); // Use card routes
 
 module.exports = router;
 // const express = require('express');
