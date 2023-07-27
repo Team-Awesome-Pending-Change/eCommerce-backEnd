@@ -1,4 +1,4 @@
-const Users = require('../models/User');
+const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const {
@@ -25,7 +25,7 @@ exports.signup = async (req, res, next) => {
     return res.status(400).json({ message: 'Basic_info, username, email, and password fields are required' });
   }
 
-  const existingUser = await Users.findOne({ 'login_data.username': username.trim() });
+  const existingUser = await User.findOne({ 'login_data.username': username.trim() });
   
   console.log('existingUser:', existingUser);
   if (existingUser) {
@@ -34,7 +34,7 @@ exports.signup = async (req, res, next) => {
 
   const hashedPassword = await bcrypt.hash(password.trim(), 10);
 
-  const newUser = new Users({
+  const newUser = new User({
     login_data: {
       username: username.trim(),
       password: hashedPassword,
@@ -102,7 +102,7 @@ exports.signin = async (req, res, next) => {
 
 exports.getProfile = async (req, res, next) => {
   console.log('req.authData:', req.authData);
-  const user = await Users.findById(req.authData.id);
+  const user = await User.findById(req.authData.id);
 
   if (!user) {
     return res.status(404).json({ message: 'User not found' });
@@ -115,7 +115,7 @@ exports.updateProfile = async (req, res, next) => {
   const updates = req.body;
 
   try {
-    const user = await Users.findByIdAndUpdate(req.authData.id, updates, {
+    const user = await User.findByIdAndUpdate(req.authData.id, updates, {
       new: true,
     });
     if (!user) {
@@ -130,7 +130,7 @@ exports.updateProfile = async (req, res, next) => {
 
 exports.deleteProfile = async (req, res, next) => {
   try {
-    const user = await Users.findByIdAndDelete(req.authData.id);
+    const user = await User.findByIdAndDelete(req.authData.id);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -143,7 +143,7 @@ exports.deleteProfile = async (req, res, next) => {
 
 exports.getUserById = async (req, res, next) => {
   try {
-    const user = await Users.findById(req.params.id);
+    const user = await User.findById(req.params.id);
     if (!user) return res.status(404).send('User not found.');
     res.json(user);
   } catch (error) {

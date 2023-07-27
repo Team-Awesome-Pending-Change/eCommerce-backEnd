@@ -1,7 +1,7 @@
-const Cart = require("../models/Cart.js");
+const Cart = require('../models/Cart.js');
 
 exports.getCart = async (req, res) => {
-  const cart = await Cart.findOne({ userId: req.params.id });
+  const cart = await Cart.findById(req.params.cartId);
   res.json(cart);
 };
 
@@ -9,15 +9,20 @@ exports.getUserCart = async (req, res) => {
   const { userId } = req.params;
 
   try {
-    const userCart = await Cart.findOne({ userId: userId }); // Assuming your Cart model has a userId field
+    let userCart = await Cart.findOne({ userId: userId });
 
     if (!userCart) {
-      return res.status(404).json({ error: "Cart not found" });
+      userCart = new Cart({
+        userId: userId,
+        cart: [],
+      });
+      await userCart.save();
     }
 
     res.status(200).json(userCart);
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
+    console.error(error);
+    res.status(500).json({ error: error.toString() });
   }
 };
 
@@ -26,61 +31,117 @@ exports.getAllCarts = async (req, res) => {
   res.json(carts);
 };
 
-exports.createOrUpdateCart = async (req, res) => {
-  // console.log('CREATE OR UPDATE CART', req.body);
-  const { itemId, quantity, userId } = req.body;
-  let cart = await Cart.findOne({ userId: userId });
+exports.updateCart = async (req, res) => {
+  const cart = req.body;
+  console.log('cart', cart);
 
-  if (!cart) {
-    cart = new Cart({
-      userId: userId,
-      items: [{ itemId, quantity }],
-    });
-  } else {
-    cart.items.push({ itemId, quantity });
+  if (!Array.isArray(cart)) {
+    return res.status(400).json({ error: 'Cart must be an array' });
   }
+  try {
+    let currentCart = await Cart.findById(req.params.cartId);
+    console.log('currentCart', currentCart);
 
-  await cart.save();
-  res.json(cart);
+    if (currentCart) {
+      // Create a copy of the current cart
+      let updatedCart = [...currentCart.cart];
+
+      for (let item of cart) {
+        const { id } = item;
+        const quantity = parseInt(item.quantity);
+
+        const itemIndex = updatedCart.findIndex(
+          (cartItem) => cartItem.id.toString() === id.toString(),
+        );
+
+        if (itemIndex > -1) {
+          if (item.quantity === 0) {
+            updatedCart.splice(itemIndex, 1);
+          } else {
+            updatedCart[itemIndex].quantity = item.quantity;
+          }
+        } else if (quantity > 0) {
+          updatedCart.push(item);
+        }
+      }
+
+      // Update the cart
+      currentCart.cart = updatedCart;
+
+      await currentCart.save();
+      res.json(currentCart);
+    } else {
+      res.status(404).json({ error: 'Cart not found.' });
+    }
+  } catch (error) {
+    console.error('updateCart error:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
 };
 
-exports.updateCart = async (req, res) => {
-  // console.log('UPDATE CART', req.body);
-
-  const { itemId, quantity } = req.body;
-  let cart = await Cart.findOne({ userId: req.params.userId });
+exports.deleteItemFromCart = async (req, res) => {
+  let cart = await Cart.findById(req.params.cartId);
 
   if (cart) {
-    const itemIndex = cart.items.findIndex((item) => item.itemId === itemId);
+    cart.cart = cart.cart.filter(
+      (item) => item.cardId.toString() !== req.params.cartId,
+    );
 
-    if (itemIndex > -1) {
-      cart.items[itemIndex].quantity = quantity;
+    await cart.save();
+    res.json(cart);
+  } else {
+    res.status(404).json({ error: 'Cart not found.' });
+  }
+};
+
+exports.createOrUpdateCart = async (req, res) => {
+  const { cardId, quantity, userId } = req.body;
+
+  try {
+    let cart = await Cart.findOne({ userId: userId });
+
+    if (!cart) {
+      cart = new Cart({
+        userId: userId,
+        cart: [{ cardId, quantity }],
+      });
     } else {
-      cart.items.push({ itemId, quantity });
+      // Check if card already exists in the cart
+      let existingCartItem = cart.cart.find(
+        (item) => item.cardId.toString() === cardId,
+      );
+
+      if (existingCartItem) {
+        existingCartItem.quantity += quantity; // update the quantity
+      } else {
+        cart.cart.push({ cardId, quantity });
+      }
     }
 
     await cart.save();
     res.json(cart);
-  } else {
-    res.status(404).json({ error: "Cart not found." });
+  } catch (error) {
+    res.status(500).json({ error: error.message }); // Updated this line to show error message
   }
 };
 
-exports.getAllCartsAndFindUserCart = async (req, res) => {
-  const carts = await Cart.find();
-  const userCart = carts.find((cart) => cart.userId === req.body.userId);
-  res.json(userCart);
-};
+exports.createEmptyCart = async (req, res) => {
+  const { userId } = req.body; // Extracting userId from body instead of params
 
-exports.deleteItemFromCart = async (req, res) => {
-  let cart = await Cart.findOne({ userId: req.params.userId });
+  try {
+    let cart = await Cart.findOne({ userId: userId });
 
-  if (cart) {
-    cart.items = cart.items.filter((item) => item.itemId !== req.params.id);
+    if (!cart) {
+      cart = new Cart({
+        userId: userId,
+        cart: [],
+      });
 
-    await cart.save();
+      await cart.save();
+    }
+
     res.json(cart);
-  } else {
-    res.status(404).json({ error: "Cart not found." });
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
   }
 };

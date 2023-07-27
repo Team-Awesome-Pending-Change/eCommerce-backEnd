@@ -1,27 +1,58 @@
+
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const CartSchema = new Schema({
-  userId: {  // Change from 'id' to 'userId'
-    type: Schema.Types.ObjectId, // This should be an ObjectId
-    ref: 'User', // This references the User model
+const CardImageSchema = new Schema({
+  id: {
+    type: Number,
     required: true,
   },
-  cart: [{
-    items: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Card', // This references the Card model
-      required: true,
-    },
-    quantity: {
-      type: Number,
-      default: 1,
-    },
-  }],
-  totalPrice: {
-    type: Number,
-    default: 0,
+  image_url: {
+    type: String,
+    required: true,
   },
-}, { timestamps: true });
+});
+
+const CardPriceSchema = new Schema({
+  tcgplayer_price: {
+    type: Number,
+    required: true,
+  },
+});
+
+const CardInCartSchema = new Schema({
+  id: {
+    type: Number,
+    required: true,
+    // unique: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  type: String,
+  frameType: String,
+  desc: String,
+  atk: Number,
+  def: Number,
+  level: Number,
+  race: String,
+  attribute: String,
+  card_images: [CardImageSchema],
+  card_prices: [CardPriceSchema],
+  quantity: {
+    type: Number,
+    required: true,
+  },
+});
+
+const CartSchema = new Schema({
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
+  cart: [CardInCartSchema],
+});
 
 module.exports = mongoose.model('Cart', CartSchema);
