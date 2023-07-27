@@ -22,7 +22,9 @@ const CardPriceSchema = new Schema({
 
 const CardInCartSchema = new Schema({
   id: {
-    type: Number,
+    // type: Number,
+    type: String,
+
     required: true,
     // unique: true,
   },
@@ -51,6 +53,7 @@ const CartSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true,
+    unique: true,
   },
   cart: [CardInCartSchema],
 });

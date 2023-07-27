@@ -19,6 +19,8 @@ exports.getUserCart = async (req, res) => {
       await userCart.save();
     }
 
+    // console.log('userCart', userCart);
+
     res.status(200).json(userCart);
   } catch (error) {
     console.error(error);
@@ -33,14 +35,14 @@ exports.getAllCarts = async (req, res) => {
 
 exports.updateCart = async (req, res) => {
   const cart = req.body;
-  console.log('cart', cart);
+  // console.log('cart', cart);
 
   if (!Array.isArray(cart)) {
     return res.status(400).json({ error: 'Cart must be an array' });
   }
   try {
     let currentCart = await Cart.findById(req.params.cartId);
-    console.log('currentCart', currentCart);
+    // console.log('currentCart', currentCart);
 
     if (currentCart) {
       // Create a copy of the current cart
@@ -84,7 +86,7 @@ exports.deleteItemFromCart = async (req, res) => {
 
   if (cart) {
     cart.cart = cart.cart.filter(
-      (item) => item.cardId.toString() !== req.params.cartId,
+      (item) => item.cardId.toString() !== req.params.cardId, // Changed from cartId to cardId
     );
 
     await cart.save();
@@ -93,6 +95,35 @@ exports.deleteItemFromCart = async (req, res) => {
     res.status(404).json({ error: 'Cart not found.' });
   }
 };
+
+exports.decreaseItemQuantity = async (req, res) => {
+  const { cardId, userId } = req.body;
+
+  try {
+    let cart = await Cart.findOne({ userId: userId });
+
+    if (cart) {
+      let existingCartItem = cart.cart.find(
+        (item) => item.cardId.toString() === cardId,
+      );
+
+      if (existingCartItem && existingCartItem.quantity > 0) {
+        existingCartItem.quantity -= 1;
+        if(existingCartItem.quantity === 0){
+          cart.cart = cart.cart.filter(item => item.cardId.toString() !== cardId);
+        }
+      } 
+
+      await cart.save();
+      res.json(cart);
+    } else {
+      res.status(404).json({ error: 'Cart not found.' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 
 exports.createOrUpdateCart = async (req, res) => {
   const { cardId, quantity, userId } = req.body;
