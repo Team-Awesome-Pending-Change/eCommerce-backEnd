@@ -31,46 +31,6 @@ const cardController = {
     return await Card.findOne({ name: name });
   },
 
-  updateCardStock: async (id, inStock) => {
-    try {
-      const card = await Card.findById(id);
-      if (!card) {
-        throw new Error('Card not found.');
-      }
-
-      if (inStock < 0) {
-        throw new Error('Stock cannot be less than 0.');
-      }
-
-      card.inStock = inStock;
-      const updatedCard = await card.save();
-
-      return updatedCard;
-    } catch (err) {
-      throw err;
-    }
-  },
-
-  addCard: async (cardData) => {
-    try {
-      const newCard = new Card(cardData);
-      const savedCard = await newCard.save();
-      return savedCard;
-    } catch (err) {
-      throw err;
-    }
-  },
-
-  deleteCard: async (id) => {
-    const card = await Card.findById(id);
-    if (!card) {
-      throw new Error('Card not found.');
-    }
-
-    await card.remove();
-    return true;
-  },
-
   getCardsFromApi: async () => {
     try {
       const response = await axios.get(

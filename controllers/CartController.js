@@ -76,7 +76,7 @@ exports.updateCart = async (req, res) => {
       res.status(404).json({ error: 'Cart not found.' });
     }
   } catch (error) {
-    console.error('updateCart error:', error);
+    console.error(error.stack);
     res.status(500).json({ error: 'Server error' });
   }
 };
@@ -97,22 +97,29 @@ exports.deleteItemFromCart = async (req, res) => {
 };
 
 exports.decreaseItemQuantity = async (req, res) => {
-  const { cardId, userId } = req.body;
+  console.log('req.body', req.body);
 
+  const { cartId } = req.params; // changed to req.params
+  const { cardId, cartData } = req.body;
+  // console.log('cartData', cartData);
+  console.log('cartId', cartId);
+  const id = cartData._id;
   try {
-    let cart = await Cart.findOne({ userId: userId });
-
+    let cart = await Cart.findOne({ _id: id });
+    console.log('cart', cart);
     if (cart) {
       let existingCartItem = cart.cart.find(
-        (item) => item.cardId.toString() === cardId,
+        (item) => item.id.toString() === cardId,
       );
 
       if (existingCartItem && existingCartItem.quantity > 0) {
         existingCartItem.quantity -= 1;
-        if(existingCartItem.quantity === 0){
-          cart.cart = cart.cart.filter(item => item.cardId.toString() !== cardId);
+        if (existingCartItem.quantity === 0) {
+          cart.cart = cart.cart.filter(
+            (item) => item.id.toString() !== cardId,
+          );
         }
-      } 
+      }
 
       await cart.save();
       res.json(cart);
@@ -120,17 +127,17 @@ exports.decreaseItemQuantity = async (req, res) => {
       res.status(404).json({ error: 'Cart not found.' });
     }
   } catch (error) {
+    console.error(error.stack);
     res.status(500).json({ error: error.message });
   }
 };
-
 
 exports.createOrUpdateCart = async (req, res) => {
   const { cardId, quantity, userId } = req.body;
 
   try {
     let cart = await Cart.findOne({ userId: userId });
-
+    console.log('cart', cart);
     if (!cart) {
       cart = new Cart({
         userId: userId,
@@ -139,7 +146,7 @@ exports.createOrUpdateCart = async (req, res) => {
     } else {
       // Check if card already exists in the cart
       let existingCartItem = cart.cart.find(
-        (item) => item.cardId.toString() === cardId,
+        (item) => item && item.cardId && item.cardId.toString() === cardId,
       );
 
       if (existingCartItem) {
